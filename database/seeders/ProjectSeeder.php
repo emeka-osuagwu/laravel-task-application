@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Project;
+use App\Models\Project;
 
 class ProjectSeeder extends Seeder
 {
@@ -16,7 +16,5 @@ class ProjectSeeder extends Seeder
         Project::create([
             'name' => 'Project 2',
         ]);
-
-        // Add more projects as needed
     }
 }

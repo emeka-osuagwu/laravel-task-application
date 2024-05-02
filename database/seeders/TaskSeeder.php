@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Task;
+use App\Models\Task;
 
 class TaskSeeder extends Seeder
 {
@@ -18,7 +18,5 @@ class TaskSeeder extends Seeder
             'name' => 'Review task B',
             'priority' => 2,
         ]);
-
-        // Add more tasks as needed
     }
 }
