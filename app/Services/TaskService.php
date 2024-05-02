@@ -19,6 +19,77 @@ class TaskService
     
     /*
     |--------------------------------------------------------------------------
+    | findWhere task service
+    |--------------------------------------------------------------------------
+    */
+    public function update($id, $payload)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | make db request
+        |--------------------------------------------------------------------------
+        */
+        try {
+            $response = Task::where('id', $id)->update($payload);
+        } catch (Throwable $exception) {
+            // TODO -> cloudwatch or slack log can be fired here
+            return [
+                "status" => 'failed',
+                "response" => $exception->getMessage(),
+                "is_successful" => false
+            ];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | return successful response
+        |--------------------------------------------------------------------------
+        */
+        return [
+            "status" => 'successful',
+            "response" => $response,
+            "is_successful" => true
+        ];
+    }
+    
+    
+    /*
+    |--------------------------------------------------------------------------
+    | findWhere task service
+    |--------------------------------------------------------------------------
+    */
+    public function findWhere($field, $value)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | make db request
+        |--------------------------------------------------------------------------
+        */
+        try {
+            $response = Task::with('project')->where($field, $value)->get();
+        } catch (Throwable $exception) {
+            // TODO -> cloudwatch or slack log can be fired here
+            return [
+                "status" => 'failed',
+                "response" => $exception->getMessage(),
+                "is_successful" => false
+            ];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | return successful response
+        |--------------------------------------------------------------------------
+        */
+        return [
+            "status" => 'successful',
+            "response" => $response,
+            "is_successful" => true
+        ];
+    }
+    
+    /*
+    |--------------------------------------------------------------------------
     | create task service
     |--------------------------------------------------------------------------
     */

@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Route;
 | Games
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\V1\Tasks\EditTask;
+use App\Http\Controllers\V1\Tasks\DeleteTask;
 use App\Http\Controllers\V1\Tasks\GetAllTask;
+use App\Http\Controllers\V1\Tasks\UpdateTask;
 use App\Http\Controllers\V1\Tasks\TaskCreate;
-use App\Http\Controllers\V1\Tasks\DeleteCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,9 @@ use App\Http\Controllers\V1\Tasks\DeleteCreate;
 */
 Route::group(['prefix' => '/'], function () {
     Route::get('tasks', GetAllTask::class)->name('tasks.index');
-    Route::put('tasks', GetAllTask::class)->name('tasks.update');
-    Route::delete('delete', DeleteCreate::class)->name('tasks.delete');
+    Route::put('tasks', UpdateTask::class)->name('tasks.update');
     Route::post('tasks', TaskCreate::class)->name('tasks.create');
+    Route::delete('delete', DeleteTask::class)->name('tasks.delete');
 });
 
 /*
