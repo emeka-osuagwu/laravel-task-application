@@ -24,12 +24,3 @@ Route::group(['prefix' => '/'], function () {
     Route::post('tasks', TaskCreate::class)->name('tasks.create');
     Route::delete('delete', DeleteTask::class)->name('tasks.delete');
 });
-
-/*
-|--------------------------------------------------------------------------
-| Project Route
-|--------------------------------------------------------------------------
-*/
-Route::group(['prefix' => '/'], function () {
-    Route::post('projects', GetAllTask::class)->name('projects');
-});
