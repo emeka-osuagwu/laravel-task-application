@@ -21,10 +21,34 @@ class GetAllTask extends Controller
         protected ProjectService $projectService
     ){}
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $tasks = $this->taskService->getAll();
-        $projects = $this->projectService->getAll();
+        /*
+        |--------------------------------------------------------------------------
+        | fetch all project
+        |--------------------------------------------------------------------------
+        */
+        $fetch_projects_response = $this->projectService->getAll();
+        
+        /*
+        |--------------------------------------------------------------------------
+        | fetch all task
+        |--------------------------------------------------------------------------
+        */
+        if($request->has('project')){
+            $find_task_response = $this->taskService->findWhere('project_id', $request->project);
+        }
+        else {
+            $find_task_response = $this->taskService->getAll();
+        }
+        
+        /*
+        |--------------------------------------------------------------------------
+        | send response
+        |--------------------------------------------------------------------------
+        */
+        $tasks = $find_task_response['response'];
+        $projects = $fetch_projects_response['response'];
         return view('tasks.index', compact('tasks', 'projects'));
     }
 }

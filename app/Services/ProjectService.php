@@ -14,7 +14,32 @@ class ProjectService
     */
     public function getAll()
     {
-        return Project::orderBy('priority')->get();
+        /*
+        |--------------------------------------------------------------------------
+        | make db request
+        |--------------------------------------------------------------------------
+        */
+        try {
+            $response = Project::orderBy('priority')->get();
+        } catch (Throwable $exception) {
+            // TODO -> cloudwatch or slack log can be fired here
+            return [
+                "status" => 'failed',
+                "response" => $exception->getMessage(),
+                "is_successful" => false
+            ];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | return successful response
+        |--------------------------------------------------------------------------
+        */
+        return [
+            "status" => 'successful',
+            "response" => $response,
+            "is_successful" => true
+        ];
     }
     
     /*
@@ -26,7 +51,6 @@ class ProjectService
     {
         try {
             Project::create($data);
-            dd(1);
         } catch (Throwable $th) {
             return [
                 "status" => 'successful',

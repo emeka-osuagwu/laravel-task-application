@@ -12,6 +12,17 @@
 <body>
     <div class="container">
         <h1 class="mt-5 mb-4">Task Manager</h1>
+
+        <div class="form-group">
+            <label for="projectFilter">Filter by Project</label>
+            <select name="project_id" id="projectFilter" class="form-control">
+                <option value="">All Projects</option>
+                @foreach ($projects as $project)
+                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <form action="{{ route('tasks.create') }}" method="POST" class="mb-4">
             @csrf
             @if ($errors->any())
@@ -57,7 +68,6 @@
                 </div>
             </div>
         </form>
-
 
         <ul id="sortableList" class="list-group">
             @forelse ($tasks as $task)
@@ -133,6 +143,7 @@
                 <li class="list-group-item">No tasks found.</li>
             @endforelse
         </ul>
+        
     </div>
 </body>
 
@@ -143,7 +154,12 @@
 <!-- Bootstrap JavaScript via CDN -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
+<script>
+    document.getElementById('projectFilter').addEventListener('change', function() {
+        var projectId = this.value;
+        window.location.href = "{{ route('tasks.index') }}" + (projectId ? '?project=' + projectId : '');
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         new Sortable(sortableList, {
