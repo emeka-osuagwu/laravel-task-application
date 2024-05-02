@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Throwable;
 use App\Models\Task;
 
 class TaskService
@@ -13,7 +14,7 @@ class TaskService
     */
     public function getAll()
     {
-        return Task::orderBy('priority')->get();
+        return Task::with('project')->orderBy('priority')->get();
     }
     
     /*
@@ -21,8 +22,33 @@ class TaskService
     | create task service
     |--------------------------------------------------------------------------
     */
-    public function create($data)
-    {
-        return Task::create($data);
+    public function create($payload)
+    {  
+        /*
+        |--------------------------------------------------------------------------
+        | make db request
+        |--------------------------------------------------------------------------
+        */
+        try {
+            Task::create($payload);
+        } catch (Throwable $exception) {
+            // TODO -> cloudwatch or slack log can be fired here
+            return [
+                "status" => 'failed',
+                "response" => $exception->getMessage(),
+                "is_successful" => false
+            ];
+        }
+    
+        /*
+        |--------------------------------------------------------------------------
+        | return successful response
+        |--------------------------------------------------------------------------
+        */
+        return [
+            "status" => 'successful',
+            "response" => [],
+            "is_successful" => true
+        ];
     }
 }

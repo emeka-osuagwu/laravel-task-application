@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Throwable;
 use App\Models\Project;
 
 class ProjectService
@@ -23,6 +24,15 @@ class ProjectService
     */
     public function create($data)
     {
-        return Project::create($data);
+        try {
+            Project::create($data);
+            dd(1);
+        } catch (Throwable $th) {
+            return [
+                "status" => 'successful',
+                "response" => [],
+                "is_successful" => true
+            ];
+        }
     }
 }
