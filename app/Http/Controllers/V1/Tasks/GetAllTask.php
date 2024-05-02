@@ -11,14 +11,12 @@ use App\Http\Controllers\Controller;
 
 class GetAllTask extends Controller
 {
-    use ResponseTrait;
-
     public function __construct
     (
     ) {}
 
     public function __invoke()
     {
-
+        return [];
     }
 }
