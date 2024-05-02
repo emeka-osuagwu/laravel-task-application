@@ -10,19 +10,21 @@ namespace App\Http\Controllers\V1\Tasks;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
+use App\Services\ProjectService;
 use App\Http\Controllers\Controller;
 
 class GetAllTask extends Controller
 {
     public function __construct
     (
-        protected TaskService $taskService
+        protected TaskService $taskService,
+        protected ProjectService $projectService
     ){}
 
     public function __invoke()
     {
         $tasks = $this->taskService->getAll();
-        return view('tasks.index', compact('tasks'));
-        return [];
+        $projects = $this->projectService->getAll();
+        return view('tasks.index', compact('tasks', 'projects'));
     }
 }
