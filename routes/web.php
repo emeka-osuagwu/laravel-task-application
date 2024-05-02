@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\V1\Tasks\GetAllTask;
 use App\Http\Controllers\V1\Tasks\TaskCreate;
+use App\Http\Controllers\V1\Tasks\DeleteCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Controllers\V1\Tasks\TaskCreate;
 Route::group(['prefix' => '/'], function () {
     Route::get('tasks', GetAllTask::class)->name('tasks.index');
     Route::put('tasks', GetAllTask::class)->name('tasks.update');
-    Route::put('delete', GetAllTask::class)->name('tasks.delete');
+    Route::delete('delete', DeleteCreate::class)->name('tasks.delete');
     Route::post('tasks', TaskCreate::class)->name('tasks.create');
 });
 
