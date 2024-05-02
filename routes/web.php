@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 use App\Http\Controllers\V1\Tasks\EditTask;
-use App\Http\Controllers\V1\Tasks\GetAllTask;
-use App\Http\Controllers\V1\Tasks\TaskCreate;
 use App\Http\Controllers\V1\Tasks\DeleteTask;
+use App\Http\Controllers\V1\Tasks\GetAllTask;
+use App\Http\Controllers\V1\Tasks\UpdateTask;
+use App\Http\Controllers\V1\Tasks\TaskCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,9 @@ use App\Http\Controllers\V1\Tasks\DeleteTask;
 */
 Route::group(['prefix' => '/'], function () {
     Route::get('tasks', GetAllTask::class)->name('tasks.index');
-    Route::get('tasks/{task_id}/edit', EditTask::class)->name('tasks.edit');
-    Route::put('tasks', GetAllTask::class)->name('tasks.update');
-    Route::delete('delete', DeleteTask::class)->name('tasks.delete');
+    Route::put('tasks', UpdateTask::class)->name('tasks.update');
     Route::post('tasks', TaskCreate::class)->name('tasks.create');
+    Route::delete('delete', DeleteTask::class)->name('tasks.delete');
 });
 
 /*
