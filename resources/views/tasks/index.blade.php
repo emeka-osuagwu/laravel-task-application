@@ -59,7 +59,7 @@
         </form>
 
 
-        <ul class="list-group">
+        <ul id="sortableList" class="list-group">
             @forelse ($tasks as $task)
                 <li class="list-group-item">
                     <div class="d-flex justify-content-between align-items-center">
@@ -137,9 +137,33 @@
 </body>
 
 <!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <!-- Bootstrap JavaScript via CDN -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new Sortable(sortableList, {
+            onEnd: function(evt) {
+                // Reorder tasks
+                var taskIds = [];
+                document.querySelectorAll('#sortableList .list-group-item').forEach(function(item) {
+                    taskIds.push(item.getAttribute('data-task-id'));
+                });
+                
+                // Update priorities based on new order
+                taskIds.forEach(function(taskId, index) {
+                    var priority = index + 1; // 1-based index
+                    // Make AJAX request to update task priority
+                    // Example: $.post('/tasks/' + taskId + '/update-priority', { priority: priority });
+                });
+            }
+        });
+    });
+</script>
 
 
 </html>
