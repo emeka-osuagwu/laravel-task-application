@@ -69,9 +69,10 @@
                     @endif
                 </div>
                 <div>
-                    <form action="{{ route('tasks.delete', $task->id) }}" method="POST">
+                    <form action="{{ route('tasks.delete') }}" method="POST">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" name="task_id" value="{{ $task->id }}">
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                 </div>
