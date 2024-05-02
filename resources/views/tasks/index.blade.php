@@ -6,6 +6,8 @@
     <title>Task Manager</title>
     <!-- Bootstrap CSS via CDN -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -74,6 +76,45 @@
                         @method('DELETE')
                         <input type="hidden" name="task_id" value="{{ $task->id }}">
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editTaskModal{{ $task->id }}">Edit</button>
+
+ <!-- Edit Task Modal for each task -->
+ <div class="modal fade" id="editTaskModal{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel{{ $task->id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editTaskModalLabel{{ $task->id }}">Edit Task</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <!-- Edit Task Form -->
+                            <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <!-- Task Name Field -->
+                                <div class="form-group">
+                                    <label for="name">Task Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ $task->name }}">
+                                </div>
+                                <!-- Priority Field -->
+                                <div class="form-group">
+                                    <label for="priority">Priority</label>
+                                    <input type="text" name="priority" id="priority" class="form-control" value="{{ $task->priority }}">
+                                </div>
+                                <!-- Add more fields as needed -->
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary">Update Task</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                     </form>
                 </div>
             </div>
@@ -84,4 +125,11 @@
 </ul>
     </div>
 </body>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!-- Bootstrap JavaScript via CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </html>

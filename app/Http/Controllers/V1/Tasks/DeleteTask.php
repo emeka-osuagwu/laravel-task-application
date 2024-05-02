@@ -14,7 +14,7 @@ use App\Services\ProjectService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteTaskRequest;
 
-class DeleteCreate extends Controller
+class DeleteTask extends Controller
 {
     public function __construct
     (
